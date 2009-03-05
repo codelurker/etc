@@ -1,0 +1,5 @@
+URxvt*font: xft:Inconsolata:size=8
+URxvt*boldFont: xft:Inconsolata:size=8:style=bold
+URxvt*foreground: white
+URxvt*background: gray12
+URxvt*modifier: alt
