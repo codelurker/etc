@@ -1,5 +1,8 @@
-URxvt*font: xft:Inconsolata:size=8
-URxvt*boldFont: xft:Inconsolata:size=8:style=bold
+URxvt*font: xft:Inconsolata:size=7
+URxvt*boldFont: xft:Inconsolata:size=7:style=bold
 URxvt*foreground: white
-URxvt*background: gray12
+URxvt*background: black
 URxvt*modifier: alt
+URxvt*visualBell: true
+Emacs.FontBackend: xft
+Emacs.font: Inconsolata-7

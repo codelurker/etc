@@ -2,6 +2,7 @@ import XMonad
 import XMonad.Actions.CycleWS
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
+import XMonad.Layout.ResizableTile
 import XMonad.Layout.Tabbed
 import XMonad.Util.Run
 import XMonad.Util.EZConfig(additionalKeys)
@@ -37,8 +38,13 @@ main = do
                 ((modMask,               xK_z),     toggleWS),
                 ((modMask,               xK_f),     moveTo Next EmptyWS),
                 ((modMask .|. shiftMask, xK_f),     shiftTo Next EmptyWS)]
+
+	       -- Resizable tile bindings
+	       ++
+  	       [((modMask, xK_x), sendMessage MirrorExpand),
+	        ((modMask, xK_c), sendMessage MirrorShrink)] 	
        
-myLayout = tabbed shrinkText myTabConfig ||| tiled ||| Mirror tiled ||| Full
+myLayout = tabbed shrinkText myTabConfig ||| ResizableTall nmaster delta ratio [] ||| Mirror tiled ||| Full
   where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = Tall nmaster delta ratio
