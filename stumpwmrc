@@ -1,0 +1,72 @@
+(in-package :stumpwm)
+
+(set-prefix-key (kbd "s-`"))
+
+(defparameter X-TERM "exec urxvt"
+  "Use urxvt instead of xterm")
+
+;; Turn on sloppy focus
+(setf *mouse-focus-policy* :sloppy)
+
+;; Window movement keys
+
+(define-key *top-map* (kbd "s-Left") "move-focus left")
+(define-key *top-map* (kbd "s-S-Left") "move-window left")
+
+(define-key *top-map* (kbd "s-Right") "move-focus right")
+(define-key *top-map* (kbd "s-S-Right") "move-window right")
+
+(define-key *top-map* (kbd "s-Up") "move-focus up")
+(define-key *top-map* (kbd "s-S-Up") "move-window up")
+
+(define-key *top-map* (kbd "s-Down") "move-focus down")
+(define-key *top-map* (kbd "s-S-Down") "move-window down")
+
+;; Window Cycling
+
+(define-key *top-map* (kbd "s-Tab") "next-in-frame")
+(define-key *top-map* (kbd "s-ISO_Left_Tab") "prev-in-frame")     ;; this is Shift Tab
+
+;;; Group switching
+
+;; Super-Fxx will switch to the relevant group
+(dotimes (i 13)
+  (unless (eq i 0) ; F0 is non-existant and will error.
+    (define-key *top-map* (kbd (format nil "s-F~a" i)) (format nil "gselect ~a" i))))
+
+(define-key *top-map* (kbd "C-s-Left") "gprev")
+(define-key *top-map* (kbd "C-s-Right") "gnext")
+
+;;; Theme.
+
+(defparameter *foreground-color* "black")
+(defparameter *background-color* "gray")
+(defparameter *border-color* "dark gray")
+
+(set-msg-border-width 2)
+(setf *message-window-padding* 2)
+(setf *message-window-gravity* :center)
+(setf *input-window-gravity* :center)
+
+;; Window border colors.
+(set-focus-color "dark red")
+(set-unfocus-color "dark gray")
+
+;; Input box colors.
+(set-fg-color *foreground-color*)
+(set-bg-color *background-color*)
+(set-border-color *border-color*)
+
+;; Modeline colors.
+(setf *mode-line-foreground-color* *foreground-color*)
+(setf *mode-line-background-color* *background-color*)
+(setf *mode-line-border-color* *border-color*)
+
+(set-font "mints-strong")
+
+;;; Application shortcuts
+
+(define-key *top-map* (kbd "s-t") "exec urxvt")
+(define-key *top-map* (kbd "s-f") "exec firefox")
+(define-key *top-map* (kbd "s-o") "exec sshmenu")
+(define-key *top-map* (kbd "C-s-l") "exec xscreensaver-command -lock")
