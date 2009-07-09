@@ -1,33 +1,10 @@
-#!/bin/bash
+export PATH=/home/mburrows/emacs/bin:~/firefox:~/scripts:/usr/local/bin:$PATH
 
-# Load resources
-xrdb -merge ~/.Xdefaults
+xrdb -merge ~/.Xresources
 
-# Remap CapsLock to Ctrl
-xmodmap ~/.xmodmap
+xset +fp ~/fonts
 
-# Setup icon tray
-trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 10 --tint black --transparent true --height 10 &
+xscreensaver-command -exit
+xscreensaver &
 
-# Set root window
-xsetroot -solid darkslategray
-
-# Fire up some apps
-
-if [ -x /usr/bin/nm-applet ] ; then
-   nm-applet --sm-disable &
-fi
- 
-if [ -x /usr/bin/gnome-power-manager ] ; then
-   sleep 3
-   gnome-power-manager
-fi
-
-if [ -x /usr/bin/gnome-screensaver ] ; then
-   gnome-screensaver &
-fi
-
-urxvt &
-
-# Start the window manager
-exec /usr/bin/xmonad
+/home/mburrows/stumpwm/stumpwm
