@@ -1,6 +1,6 @@
 (in-package :stumpwm)
 
-(set-prefix-key (kbd "s-`"))
+(set-prefix-key (kbd "C-t"))
 
 (defparameter X-TERM "exec urxvt"
   "Use urxvt instead of xterm")
@@ -36,6 +36,9 @@
 
 (define-key *top-map* (kbd "C-s-Left") "gprev")
 (define-key *top-map* (kbd "C-s-Right") "gnext")
+(define-key *top-map* (kbd "s-z") "gother")
+
+(define-key *root-map* (kbd "C-#") "pull-marked")
 
 ;;; Theme.
 
@@ -46,10 +49,11 @@
 (set-msg-border-width 2)
 (setf *message-window-padding* 2)
 (setf *message-window-gravity* :center)
-(setf *input-window-gravity* :center)
+(setf *input-window-gravity* :bottom-right)
+(setf *window-border-style* :thin)
 
 ;; Window border colors.
-(set-focus-color "dark red")
+(set-focus-color "red")
 (set-unfocus-color "dark gray")
 
 ;; Input box colors.
@@ -62,11 +66,11 @@
 (setf *mode-line-background-color* *background-color*)
 (setf *mode-line-border-color* *border-color*)
 
-(set-font "mints-strong")
+(set-font "smoothansi")
 
 ;;; Application shortcuts
 
-(define-key *top-map* (kbd "s-t") "exec urxvt")
+(define-key *top-map* (kbd "s-c") "exec urxvt")
 (define-key *top-map* (kbd "s-f") "exec firefox")
-(define-key *top-map* (kbd "s-o") "exec sshmenu")
+(define-key *top-map* (kbd "s-s") "exec sshmenu")
 (define-key *top-map* (kbd "C-s-l") "exec xscreensaver-command -lock")
