@@ -174,6 +174,7 @@ alias h="history"
 alias hg="history | grep $*"
 alias l="ls -lrt"
 alias la="ls -a"
+alias ll="ls -l"
 
 # No spelling correction (we have correct_all option set)
 alias man='nocorrect man'
