@@ -1,4 +1,7 @@
+;; -*-lisp-*-
 (in-package :stumpwm)
+
+(load "/home/matt/stumpwm/contrib/surfraw.lisp")
 
 (set-prefix-key (kbd "C-t"))
 
@@ -14,6 +17,9 @@
   "run an xterm instance"
   (run-or-raise "xterm -name xterm1" '(:instance "xterm1")))
 
+(defcommand xterm-2 () ()
+  "run an xterm instance"
+  (run-or-raise "xterm -name xterm2" '(:instance "xterm2")))
 
 ;; Window movement keys
 
@@ -39,7 +45,9 @@
 ;; Super-Fxx will switch to the relevant group
 (dotimes (i 9)
   (unless (eq i 0) ; F0 is non-existant and will error.
-    (define-key *top-map* (kbd (format nil "s-~a" i)) (format nil "gselect ~a" i))))
+    (progn
+      (define-key *top-map* (kbd (format nil "s-~a" i)) (format nil "gselect ~a" i))
+      (define-key *top-map* (kbd (format nil "s-S-~a" i)) (format nil "gmove ~a" i)))))
 
 (define-key *top-map* (kbd "C-s-Left") "gprev")
 (define-key *top-map* (kbd "C-s-Right") "gnext")
@@ -64,8 +72,8 @@
 (setf *window-border-style* :thin)
 
 ;; Window border colors.
-(set-focus-color "red")
-(set-unfocus-color "dark gray")
+(set-focus-color "darkred")
+(set-unfocus-color "black")
 
 ;; Input box colors.
 (set-fg-color *foreground-color*)
@@ -79,12 +87,24 @@
 
 (set-font "smoothansi")
 
-;;; Application shortcuts
+;; Create a few workspaces
+(run-commands "gnewbg emacs"
+              "gnewbg web")
+
+;;; Shortcuts
 
 (define-key *top-map* (kbd "s-c") "exec xterm")
 (define-key *top-map* (kbd "s-f") "firefox")
 (define-key *top-map* (kbd "s-r") "loadrc")
 (define-key *top-map* (kbd "s-e") "emacs")
 (define-key *top-map* (kbd "s-t") "xterm-1")
+(define-key *top-map* (kbd "s-y") "xterm-2")
 (define-key *top-map* (kbd "s-w") "windowlist")
 (define-key *top-map* (kbd "s-s") "exec sshmenu")
+(define-key *top-map* (kbd "s-g") "google")
+(define-key *top-map* (kbd "s-G") "google-selection")
+(define-key *top-map* (kbd "s-p") "wikipedia")
+(define-key *top-map* (kbd "s-P") "wikipedia-selection")
+(define-key *top-map* (kbd "s-d") "webster")
+(define-key *top-map* (kbd "s-D") "webster-selection")
+
