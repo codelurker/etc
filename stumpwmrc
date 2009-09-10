@@ -85,7 +85,7 @@
 (setf *mode-line-background-color* *background-color*)
 (setf *mode-line-border-color* *border-color*)
 
-(set-font "smoothansi")
+(set-font "fixed")
 
 ;; Create a few workspaces
 (run-commands "gnewbg emacs"
