@@ -1,0 +1,13 @@
+#!/bin/sh
+
+choice=`cat ~/.sshmenu | dmenu -nf grey -nb Midnight\ Blue -sb Firebrick \
+                         -fn -sgi-screen-medium-*-*-*-13-*-*-*-*-*-*-* \
+                         -p "ssh:"`
+
+if [ -z "$choice" ]; then
+    exit
+fi
+
+host=`echo $choice | cut -d' ' -f1`
+echo $host
+urxvt +tr -bg '#440000' -fg white -title $host -e ssh $host &
