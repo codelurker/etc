@@ -15,4 +15,5 @@ main = do
                         , ppTitle = xmobarColor "green" "" . shorten 50
                         }
         , modMask = mod4Mask
+        , terminal = "urxvt"
         }
