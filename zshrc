@@ -169,12 +169,14 @@ alias e="emacsclient --no-wait $*"
 alias et="emacsclient -t -a vim $*"
 alias ec="emacsclient -c -a vim $*"
 alias ls="ls --color"
-alias bats="sudo vpnc --enable-1des ~/etc/25CA.conf"
+alias bats="sudo vpnc --enable-1des ~/Dropbox/BATS/25CA.conf"
+alias stab="sudo vpnc-disconnect"
 alias h="history"
 alias hg="history | grep $*"
 alias l="ls -lrt"
 alias la="ls -a"
 alias ll="ls -l"
+alias tf="tail -F"
 
 # No spelling correction (we have correct_all option set)
 alias man='nocorrect man'
@@ -188,6 +190,8 @@ alias ipython='nocorrect ipython'
 alias grin='nocorrect grin'
 
 export EDITOR='emacsclient -c -a vim'
+
+export PATH=$PATH:~/scripts
 
 # Local environment
 

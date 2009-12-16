@@ -17,12 +17,11 @@ main = do
                         , ppTitle = xmobarColor "green" "" . shorten 50
                         }
         , modMask = mod4Mask
-        , terminal = "urxvt"
         , borderWidth = 2
         , normalBorderColor = "black"
         , focusedBorderColor = "orange"
         } `additionalKeys`
-        [ ((mod4Mask .|. shiftMask, xK_z), spawn "gnome-screensaver-command --lock")
+        [ ((mod4Mask .|. shiftMask, xK_l), spawn "gnome-screensaver-command --lock")
         , ((mod4Mask, xK_s), spawn "/home/mburrows/scripts/sshmenu")
         , ((mod4Mask, xK_f), spawn "firefox")
         , ((mod4Mask, xK_Down), nextWS)
