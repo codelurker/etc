@@ -191,7 +191,7 @@ alias grin='nocorrect grin'
 
 export EDITOR='emacsclient -c -a vim'
 
-export PATH=$PATH:~/scripts
+export PATH=$PATH:~/scripts:~/bin:~/.cabal/bin
 
 # Local environment
 

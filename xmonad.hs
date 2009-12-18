@@ -42,8 +42,8 @@ myKeys =
         , ((mod4Mask .|. shiftMask, xK_Right), shiftNextScreen)
         , ((mod4Mask .|. shiftMask, xK_Left), shiftPrevScreen)
         , ((mod4Mask, xK_z), toggleWS)
-        , ((mod4Mask, xK_e), moveTo Next EmptyWS)
-        , ((mod4Mask .|. shiftMask, xK_e), shiftTo Next EmptyWS)
+        , ((mod4Mask, xK_o), moveTo Next EmptyWS)
+        , ((mod4Mask .|. shiftMask, xK_o), shiftTo Next EmptyWS)
         ]
         -- Map screen switching onto F1..F4 
         ++

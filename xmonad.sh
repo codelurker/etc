@@ -11,4 +11,4 @@ nm-applet &
 nautilus &
 dropbox start
 
-exec xmonad
+exec /usr/bin/xmonad
