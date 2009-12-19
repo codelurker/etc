@@ -16,7 +16,7 @@ main = do
         , layoutHook = myLayouts
 	, logHook = dynamicLogWithPP $ xmobarPP
                         { ppOutput = hPutStrLn xmproc
-                        , ppTitle = xmobarColor "green" "" . shorten 50
+                        , ppTitle = xmobarColor "darkcyan" "" . shorten 75
                         }
         , modMask = mod4Mask
         , terminal = "gnome-terminal"
@@ -29,6 +29,7 @@ myKeys =
         -- Program launching
         [ ((mod4Mask .|. shiftMask, xK_l), spawn "gnome-screensaver-command --lock")
         , ((mod4Mask, xK_s), spawn "/home/mburrows/scripts/sshmenu")
+        , ((mod4Mask, xK_e), spawn "emacs")
         , ((mod4Mask, xK_f), spawn "firefox")
         ]
         -- Cycle workspaces setup
