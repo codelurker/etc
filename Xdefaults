@@ -1,5 +1,5 @@
-URxvt*font: xft:Inconsolata:size=10.3
-URxvt*boldFont: xft:Inconsolata:size=10.3
+URxvt*font: xft:Monospace:size=9
+URxvt*boldFont: xft:Monospace:size=9
 URxvt*skipBuiltinGlyphs: on
 URxvt*scrollBar_right: on
 URxvt*scrollTtyOutput: false
