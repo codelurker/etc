@@ -105,7 +105,7 @@ SAVEHIST=3000
 export HISTCONTROL=ignoredupes
 
 # Put my source dirs on the cd path
-cdpath=( ~ ~/ecn/source ~/ecn/source/cpp ~/ecn/source/python ~/ecn/source/sql ~/ecn/source/python/mtf/prog)
+cdpath=( ~ ~/src )
 
 # Setup my login/logout watch list
 watch=( notme )
@@ -124,11 +124,6 @@ autoload _suffix_alias_files
 # Turn on completion cache
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.zsh/cache
-
-# Add the hostnames from ~/.ssh/known_hosts to hosts
-#local _myhosts
-#_myhosts=( ${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[0-9]*}%%\ *}%%,*} )
-#zstyle ':completion:*' hosts $_myhosts
 
 # Prevent CVS files/directories from being completed
 zstyle ':completion:*:(all-|)files' ignored-patterns '(|*/)CVS'
@@ -170,7 +165,7 @@ alias et="emacsclient -t -a vim $*"
 alias ec="emacsclient -c -a vim $*"
 alias ls="ls --color"
 alias bats="sudo vpnc --enable-1des ~/Dropbox/BATS/25CA.conf"
-alias stab="sudo vpnc-disconnect"
+alias stab="sudo vpnc-disconnect && sudo resolvconf -d tun0"
 alias h="history"
 alias hg="history | grep $*"
 alias l="ls -lrt"
