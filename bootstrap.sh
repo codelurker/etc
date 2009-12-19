@@ -32,4 +32,3 @@ safe_link ~/etc/xmonad.hs ~/.xmonad/xmonad.hs
 
 # Other misc files
 safe_link ~/etc/dot-sshmenu ~/.sshmenu
-
