@@ -1,5 +1,6 @@
 import XMonad
 import XMonad.Actions.CycleWS
+import XMonad.Actions.WindowGo
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Layout.Tabbed
@@ -29,8 +30,8 @@ myKeys =
         -- Program launching
         [ ((mod4Mask .|. shiftMask, xK_l), spawn "gnome-screensaver-command --lock")
         , ((mod4Mask, xK_s), spawn "/home/mburrows/scripts/sshmenu")
-        , ((mod4Mask, xK_e), spawn "emacs")
-        , ((mod4Mask, xK_f), spawn "firefox")
+        , ((mod4Mask, xK_e), runOrRaise "emacs" (className =? "Emacs"))
+        , ((mod4Mask, xK_f), runOrRaise "firefox" (className =? "Firefox"))
         ]
         -- Cycle workspaces setup
         ++
