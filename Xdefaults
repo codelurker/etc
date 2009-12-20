@@ -1,5 +1,5 @@
-URxvt*font: xft:Droid Sans Mono:size=9
-URxvt*boldFont: xft:Droid Sans Mono:size=9
+URxvt*font: xft:Inconsolata:size=10
+URxvt*boldFont: xft:Inconsolata:size=10
 URxvt*skipBuiltinGlyphs: on
 URxvt*scrollBar_right: on
 URxvt*scrollTtyOutput: false
