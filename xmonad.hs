@@ -4,6 +4,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Layout.Tabbed
 import XMonad.Layout.Accordion
+import XMonad.Layout.HintedTile
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig(additionalKeys)
 import qualified XMonad.StackSet as W
@@ -53,6 +54,10 @@ myKeys =
               , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
 myLayouts = avoidStruts $ 
-            tiled ||| Mirror tiled ||| simpleTabbed ||| Accordion ||| Full
+            Full ||| simpleTabbed ||| hintedTile XMonad.Layout.HintedTile.Tall ||| hintedTile Wide ||| Accordion 
   where
-    tiled = Tall 1 (3/100) (1/2)
+    hintedTile = HintedTile nmaster delta ratio TopLeft
+    nmaster    = 1
+    delta      = 3/100
+    ratio      = 1/2
+
