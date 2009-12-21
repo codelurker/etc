@@ -10,6 +10,7 @@ import XMonad.Layout.NoBorders
 import XMonad.Prompt
 import XMonad.Prompt.Window
 import XMonad.Prompt.RunOrRaise
+import XMonad.Prompt.Ssh
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig(additionalKeys)
 import qualified XMonad.StackSet as W
@@ -25,7 +26,7 @@ main = do
                         , ppTitle = xmobarColor "darkcyan" "" . shorten 75
                         }
         , modMask = mod4Mask
-        , terminal = "urxvt -e zsh"
+        , terminal = "urxvt"
         , borderWidth = 2
         , normalBorderColor = "black"
         , focusedBorderColor = "orange"
@@ -34,7 +35,7 @@ main = do
 myKeys =
         -- Program launching
         [ ((mod4Mask .|. shiftMask, xK_l), spawn "gnome-screensaver-command --lock")
-        , ((mod4Mask, xK_s), spawn "/home/mburrows/scripts/sshmenu")
+        , ((mod4Mask, xK_s), sshPrompt defaultXPConfig)
         , ((mod4Mask, xK_e), runOrRaise "emacs" (className =? "Emacs"))
         , ((mod4Mask, xK_f), runOrRaise "firefox" (className =? "Firefox"))
         , ((mod4Mask, xK_r), runOrRaisePrompt defaultXPConfig)
