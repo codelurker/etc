@@ -6,6 +6,10 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Layout.Tabbed
 import XMonad.Layout.Accordion
 import XMonad.Layout.HintedTile
+import XMonad.Layout.NoBorders
+import XMonad.Prompt
+import XMonad.Prompt.Window
+import XMonad.Prompt.RunOrRaise
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig(additionalKeys)
 import qualified XMonad.StackSet as W
@@ -21,7 +25,7 @@ main = do
                         , ppTitle = xmobarColor "darkcyan" "" . shorten 75
                         }
         , modMask = mod4Mask
-        , terminal = "gnome-terminal"
+        , terminal = "urxvt -e zsh"
         , borderWidth = 2
         , normalBorderColor = "black"
         , focusedBorderColor = "orange"
@@ -33,6 +37,9 @@ myKeys =
         , ((mod4Mask, xK_s), spawn "/home/mburrows/scripts/sshmenu")
         , ((mod4Mask, xK_e), runOrRaise "emacs" (className =? "Emacs"))
         , ((mod4Mask, xK_f), runOrRaise "firefox" (className =? "Firefox"))
+        , ((mod4Mask, xK_r), runOrRaisePrompt defaultXPConfig)
+        , ((mod4Mask, xK_g), windowPromptGoto defaultXPConfig)
+        , ((mod4Mask, xK_b), windowPromptBring defaultXPConfig)
         ]
         -- Cycle workspaces setup
         ++
@@ -54,7 +61,7 @@ myKeys =
               | (key, sc) <- zip [xK_F1, xK_F2, xK_F3, xK_F4] [0..]
               , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
-myLayouts = avoidStruts $ 
+myLayouts = avoidStruts $ smartBorders $
             Full ||| simpleTabbed ||| hintedTile XMonad.Layout.HintedTile.Tall ||| hintedTile Wide ||| Accordion 
   where
     hintedTile = HintedTile nmaster delta ratio TopLeft
