@@ -18,7 +18,7 @@ main = do
         , layoutHook = myLayouts
 	, logHook = dynamicLogWithPP $ xmobarPP
                         { ppOutput = hPutStrLn xmproc
-                        , ppTitle = xmobarColor "darkcyan" "" . shorten 75
+                        , ppTitle = xmobarColor "darkcyan" "" . shorten 50
                         }
         , modMask = mod4Mask
         , terminal = "gnome-terminal"
