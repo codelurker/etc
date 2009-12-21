@@ -26,7 +26,7 @@ main = do
                         , ppTitle = xmobarColor "darkcyan" "" . shorten 50
                         }
         , modMask = mod4Mask
-        , terminal = "urxvt"
+        , terminal = "gnome-terminal"
         , borderWidth = 2
         , normalBorderColor = "black"
         , focusedBorderColor = "orange"
@@ -35,12 +35,12 @@ main = do
 myKeys =
         -- Program launching
         [ ((mod4Mask .|. shiftMask, xK_l), spawn "gnome-screensaver-command --lock")
-        , ((mod4Mask, xK_s), sshPrompt defaultXPConfig)
+        , ((mod4Mask, xK_s), sshPrompt myXPConfig)
         , ((mod4Mask, xK_e), runOrRaise "emacs" (className =? "Emacs"))
         , ((mod4Mask, xK_f), runOrRaise "firefox" (className =? "Firefox"))
-        , ((mod4Mask, xK_r), runOrRaisePrompt defaultXPConfig)
-        , ((mod4Mask, xK_g), windowPromptGoto defaultXPConfig)
-        , ((mod4Mask, xK_b), windowPromptBring defaultXPConfig)
+        , ((mod4Mask, xK_r), runOrRaisePrompt myXPConfig)
+        , ((mod4Mask, xK_g), windowPromptGoto myXPConfig)
+        , ((mod4Mask, xK_b), windowPromptBring myXPConfig)
         ]
         -- Cycle workspaces setup
         ++
@@ -70,3 +70,4 @@ myLayouts = avoidStruts $ smartBorders $
     delta      = 3/100
     ratio      = 1/2
 
+myXPConfig = defaultXPConfig { font = "xft:Inconsolata-8" }
