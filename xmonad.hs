@@ -63,7 +63,7 @@ myKeys =
               , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
 myLayouts = avoidStruts $ smartBorders $
-            Full ||| simpleTabbed ||| hintedTile XMonad.Layout.HintedTile.Tall ||| hintedTile Wide ||| Accordion 
+            tabbed shrinkText myTabConfig ||| Full ||| hintedTile XMonad.Layout.HintedTile.Tall ||| hintedTile Wide ||| Accordion 
   where
     hintedTile = HintedTile nmaster delta ratio TopLeft
     nmaster    = 1
@@ -71,3 +71,5 @@ myLayouts = avoidStruts $ smartBorders $
     ratio      = 1/2
 
 myXPConfig = defaultXPConfig { font = "xft:Inconsolata-8" }
+
+myTabConfig = defaultTheme { fontName = "xft:Inconsolata-8", decoHeight = 14 }
