@@ -35,7 +35,8 @@ main = do
 myKeys =
         -- Program launching
         [ ((mod4Mask .|. shiftMask, xK_l), spawn "gnome-screensaver-command --lock")
-        , ((mod4Mask, xK_s), sshPrompt myXPConfig)
+        --, ((mod4Mask, xK_s), sshPrompt myXPConfig)
+        , ((mod4Mask, xK_s), spawn "/home/mburrows/scripts/sshmenu")
         , ((mod4Mask, xK_e), runOrRaise "emacs" (className =? "Emacs"))
         , ((mod4Mask, xK_f), runOrRaise "firefox" (className =? "Firefox"))
         , ((mod4Mask, xK_r), runOrRaisePrompt myXPConfig)

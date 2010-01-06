@@ -1,10 +1,10 @@
 XTerm*background:               black
 XTerm*foreground:               white
 XTerm*faceName:                 Inconsolata
-XTerm*faceSize:                 10.3
+XTerm*faceSize:                 9
 
-URxvt*font:                     xft:Droid Sans Mono:size=8
-URxvt*boldFont:                 xft:Droid Sans Mono:size=8
+URxvt*font:                     xft:Inconsolata:size=8
+URxvt*boldFont:                 xft:Inconsolata:size=8
 URxvt*skipBuiltinGlyphs:        on
 URxvt*scrollBar_right:          on
 URxvt*scrollTtyOutput:          false
