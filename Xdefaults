@@ -3,6 +3,8 @@ XTerm*foreground:               white
 XTerm*faceName:                 Inconsolata
 XTerm*faceSize:                 10
 XTerm*saveLines:		2000
+XTerm*altIsNotMeta:             true
+XTerm*altSendsEscape:           true
 
 URxvt*font:                     xft:Inconsolata:size=8
 URxvt*boldFont:                 xft:Inconsolata:size=8
