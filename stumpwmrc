@@ -52,7 +52,7 @@
 (define-key *top-map* (kbd "C-s-Left") "gprev")
 (define-key *top-map* (kbd "C-s-Right") "gnext")
 (define-key *top-map* (kbd "s-z") "gother")
-(define-key *top-map* (kbd "s-g") "grouplist")
+(define-key *top-map* (kbd "s-l") "grouplist")
 
 (define-key *root-map* (kbd "C-#") "pull-marked")
 
@@ -61,8 +61,8 @@
 
 ;;; Theme.
 
-(defparameter *foreground-color* "black")
-(defparameter *background-color* "gray")
+(defparameter *foreground-color* "dark gray")
+(defparameter *background-color* "black")
 (defparameter *border-color* "dark gray")
 
 (set-msg-border-width 2)
@@ -83,7 +83,7 @@
 ;; Modeline colors.
 (setf *mode-line-foreground-color* *foreground-color*)
 (setf *mode-line-background-color* *background-color*)
-(setf *mode-line-border-color* *border-color*)
+(setf *mode-line-border-color* *background-color*)
 
 (set-font "fixed")
 
@@ -91,7 +91,7 @@
 (run-commands "gnewbg emacs"
               "gnewbg web")
 
-;;; Shortcuts
+;; Shortcuts
 
 (define-key *top-map* (kbd "s-c") "exec xterm")
 (define-key *top-map* (kbd "s-f") "firefox")
@@ -100,11 +100,23 @@
 (define-key *top-map* (kbd "s-t") "xterm-1")
 (define-key *top-map* (kbd "s-y") "xterm-2")
 (define-key *top-map* (kbd "s-w") "windowlist")
-(define-key *top-map* (kbd "s-s") "exec sshmenu")
+(define-key *top-map* (kbd "s-s") "exec /home/mburrows/scripts/sshmenu")
 (define-key *top-map* (kbd "s-g") "google")
 (define-key *top-map* (kbd "s-G") "google-selection")
 (define-key *top-map* (kbd "s-p") "wikipedia")
 (define-key *top-map* (kbd "s-P") "wikipedia-selection")
 (define-key *top-map* (kbd "s-d") "webster")
 (define-key *top-map* (kbd "s-D") "webster-selection")
+
+;; Window placement rules
+
+(clear-window-placement-rules)
+
+(define-frame-preference "emacs"
+  ;; frame raise lock (lock AND raise == jumpto)
+  (0 t   t :title "emacs"))
+
+(define-frame-preference "web"
+  ;; frame raise lock (lock AND raise == jumpto)
+  (0 t   t :class "Firefox"))
 
