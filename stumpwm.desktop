@@ -1,0 +1,6 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=StumpWM
+Comment=LISP-based tiling window manager
+Exec=/home/mburrows/scripts/stumpwm.sh
+Type=XSession
