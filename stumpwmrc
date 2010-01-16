@@ -1,7 +1,15 @@
 ;; -*-lisp-*-
 (in-package :stumpwm)
 
+(setf *startup-message* nil)
+(setf *startup-message* "Hack The Good Hack!")
+
+;; Load contrib modules
 (load "/home/mburrows/src/stumpwm/contrib/surfraw.lisp")
+(load "/home/mburrows/src/stumpwm/contrib/battery-portable.lisp")
+(load "/home/mburrows/src/stumpwm/contrib/wifi.lisp")
+(load "/home/mburrows/src/stumpwm/contrib/cpu.lisp")
+(load "/home/mburrows/src/stumpwm/contrib/net.lisp")
 
 (set-prefix-key (kbd "C-t"))
 
@@ -42,9 +50,9 @@
 
 ;;; Group switching
 
-;; Super-Fxx will switch to the relevant group
+;; Super-n will switch to the relevant group
 (dotimes (i 9)
-  (unless (eq i 0) ; F0 is non-existant and will error.
+  (unless (eq i 0) 
     (progn
       (define-key *top-map* (kbd (format nil "s-~a" i)) (format nil "gselect ~a" i))
       (define-key *top-map* (kbd (format nil "s-S-~a" i)) (format nil "gmove ~a" i)))))
@@ -89,10 +97,11 @@
 
 ;; Create a few workspaces
 (run-commands "gnewbg emacs"
-              "gnewbg web")
+              "gnewbg web"
+              "gnewbg reading"
+              "gnewbg video")
 
 ;; Shortcuts
-
 (define-key *top-map* (kbd "s-c") "exec xterm")
 (define-key *top-map* (kbd "s-f") "firefox")
 (define-key *top-map* (kbd "s-r") "loadrc")
@@ -109,7 +118,6 @@
 (define-key *top-map* (kbd "s-D") "webster-selection")
 
 ;; Window placement rules
-
 (clear-window-placement-rules)
 
 (define-frame-preference "emacs"
@@ -120,3 +128,7 @@
   ;; frame raise lock (lock AND raise == jumpto)
   (0 t   t :class "Firefox"))
 
+(setf *screen-mode-line-format* 
+      (list '(:eval (run-shell-command "date +\"%d-%m-%Y %H:%M\" | tr -d '[:cntrl:]'" t))
+            " | %W | %g | %I | %l | %B | %c")) 
+   
