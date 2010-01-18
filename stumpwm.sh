@@ -11,4 +11,4 @@ nm-applet &
 nautilus &
 dropbox start
 
-exec /usr/bin/xmonad
+exec /usr/local/bin/stumpwm

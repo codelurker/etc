@@ -1,0 +1,134 @@
+;; -*-lisp-*-
+(in-package :stumpwm)
+
+(setf *startup-message* nil)
+(setf *startup-message* "Hack The Good Hack!")
+
+;; Load contrib modules
+(load "/home/mburrows/src/stumpwm/contrib/surfraw.lisp")
+(load "/home/mburrows/src/stumpwm/contrib/battery-portable.lisp")
+(load "/home/mburrows/src/stumpwm/contrib/wifi.lisp")
+(load "/home/mburrows/src/stumpwm/contrib/cpu.lisp")
+(load "/home/mburrows/src/stumpwm/contrib/net.lisp")
+
+(set-prefix-key (kbd "C-t"))
+
+;; Move the focus and then move the mouse to that window
+(defcommand move-focus-warp (dir) ((:direction "Direction:"))
+  (move-focus-and-or-window dir)
+  (banish-pointer :window))
+
+(defcommand firefox () ()
+  (run-or-raise "firefox" '(:class "Firefox")))
+
+(defcommand xterm-1 () ()
+  "run an xterm instance"
+  (run-or-raise "xterm -name xterm1" '(:instance "xterm1")))
+
+(defcommand xterm-2 () ()
+  "run an xterm instance"
+  (run-or-raise "xterm -name xterm2" '(:instance "xterm2")))
+
+;; Window movement keys
+
+(define-key *top-map* (kbd "s-Left") "move-focus-warp left")
+(define-key *top-map* (kbd "s-S-Left") "move-window left")
+
+(define-key *top-map* (kbd "s-Right") "move-focus-warp right")
+(define-key *top-map* (kbd "s-S-Right") "move-window right")
+
+(define-key *top-map* (kbd "s-Up") "move-focus-warp up")
+(define-key *top-map* (kbd "s-S-Up") "move-window up")
+
+(define-key *top-map* (kbd "s-Down") "move-focus-warp down")
+(define-key *top-map* (kbd "s-S-Down") "move-window down")
+
+;; Window Cycling
+
+(define-key *top-map* (kbd "s-Tab") "next-in-frame")
+(define-key *top-map* (kbd "s-ISO_Left_Tab") "prev-in-frame")     ;; this is Shift Tab
+
+;;; Group switching
+
+;; Super-n will switch to the relevant group
+(dotimes (i 9)
+  (unless (eq i 0) 
+    (progn
+      (define-key *top-map* (kbd (format nil "s-~a" i)) (format nil "gselect ~a" i))
+      (define-key *top-map* (kbd (format nil "s-S-~a" i)) (format nil "gmove ~a" i)))))
+
+(define-key *top-map* (kbd "C-s-Left") "gprev")
+(define-key *top-map* (kbd "C-s-Right") "gnext")
+(define-key *top-map* (kbd "s-z") "gother")
+(define-key *top-map* (kbd "s-l") "grouplist")
+
+(define-key *root-map* (kbd "C-#") "pull-marked")
+
+;; Turn on click to focus
+(setf *mouse-focus-policy* :click)
+
+;;; Theme.
+
+(defparameter *foreground-color* "dark gray")
+(defparameter *background-color* "black")
+(defparameter *border-color* "dark gray")
+
+(set-msg-border-width 2)
+(setf *message-window-padding* 2)
+(setf *message-window-gravity* :center)
+(setf *input-window-gravity* :center)
+(setf *window-border-style* :thin)
+
+;; Window border colors.
+(set-focus-color "darkred")
+(set-unfocus-color "black")
+
+;; Input box colors.
+(set-fg-color *foreground-color*)
+(set-bg-color *background-color*)
+(set-border-color *border-color*)
+
+;; Modeline colors.
+(setf *mode-line-foreground-color* *foreground-color*)
+(setf *mode-line-background-color* *background-color*)
+(setf *mode-line-border-color* *background-color*)
+
+(set-font "fixed")
+
+;; Create a few workspaces
+(run-commands "gnewbg emacs"
+              "gnewbg web"
+              "gnewbg reading"
+              "gnewbg video")
+
+;; Shortcuts
+(define-key *top-map* (kbd "s-c") "exec xterm")
+(define-key *top-map* (kbd "s-f") "firefox")
+(define-key *top-map* (kbd "s-r") "loadrc")
+(define-key *top-map* (kbd "s-e") "emacs")
+(define-key *top-map* (kbd "s-t") "xterm-1")
+(define-key *top-map* (kbd "s-y") "xterm-2")
+(define-key *top-map* (kbd "s-w") "windowlist")
+(define-key *top-map* (kbd "s-s") "exec /home/mburrows/scripts/sshmenu")
+(define-key *top-map* (kbd "s-g") "google")
+(define-key *top-map* (kbd "s-G") "google-selection")
+(define-key *top-map* (kbd "s-p") "wikipedia")
+(define-key *top-map* (kbd "s-P") "wikipedia-selection")
+(define-key *top-map* (kbd "s-d") "webster")
+(define-key *top-map* (kbd "s-D") "webster-selection")
+
+;; Window placement rules
+(clear-window-placement-rules)
+
+(define-frame-preference "emacs"
+  ;; frame raise lock (lock AND raise == jumpto)
+  (0 t   t :title "emacs"))
+
+(define-frame-preference "web"
+  ;; frame raise lock (lock AND raise == jumpto)
+  (0 t   t :class "Firefox"))
+
+(setf *screen-mode-line-format* 
+      (list '(:eval (run-shell-command "date +\"%d-%m-%Y %H:%M\" | tr -d '[:cntrl:]'" t))
+            " | %W | %g | %I | %l | %B | %c")) 
+   

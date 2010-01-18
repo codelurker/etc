@@ -10,4 +10,4 @@ fi
 
 host=`echo $choice | cut -d' ' -f1`
 echo $host
-urxvt +tr -bg '#440000' -fg white -title $host -e ssh $host &
+xterm -bg '#440000' -fg white -title $host -e ssh $host &

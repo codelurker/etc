@@ -23,10 +23,10 @@ main = do
         , layoutHook = myLayouts
 	, logHook = dynamicLogWithPP $ xmobarPP
                         { ppOutput = hPutStrLn xmproc
-                        , ppTitle = xmobarColor "darkcyan" "" . shorten 75
+                        , ppTitle = xmobarColor "darkcyan" "" . shorten 50
                         }
         , modMask = mod4Mask
-        , terminal = "urxvt"
+        , terminal = "gnome-terminal"
         , borderWidth = 2
         , normalBorderColor = "black"
         , focusedBorderColor = "orange"
@@ -35,12 +35,13 @@ main = do
 myKeys =
         -- Program launching
         [ ((mod4Mask .|. shiftMask, xK_l), spawn "gnome-screensaver-command --lock")
-        , ((mod4Mask, xK_s), sshPrompt defaultXPConfig)
+        --, ((mod4Mask, xK_s), sshPrompt myXPConfig)
+        , ((mod4Mask, xK_s), spawn "/home/mburrows/scripts/sshmenu")
         , ((mod4Mask, xK_e), runOrRaise "emacs" (className =? "Emacs"))
         , ((mod4Mask, xK_f), runOrRaise "firefox" (className =? "Firefox"))
-        , ((mod4Mask, xK_r), runOrRaisePrompt defaultXPConfig)
-        , ((mod4Mask, xK_g), windowPromptGoto defaultXPConfig)
-        , ((mod4Mask, xK_b), windowPromptBring defaultXPConfig)
+        , ((mod4Mask, xK_r), runOrRaisePrompt myXPConfig)
+        , ((mod4Mask, xK_g), windowPromptGoto myXPConfig)
+        , ((mod4Mask, xK_b), windowPromptBring myXPConfig)
         ]
         -- Cycle workspaces setup
         ++
@@ -63,10 +64,13 @@ myKeys =
               , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
 myLayouts = avoidStruts $ smartBorders $
-            Full ||| simpleTabbed ||| hintedTile XMonad.Layout.HintedTile.Tall ||| hintedTile Wide ||| Accordion 
+            tabbed shrinkText myTabConfig ||| Full ||| hintedTile XMonad.Layout.HintedTile.Tall ||| hintedTile Wide ||| Accordion 
   where
     hintedTile = HintedTile nmaster delta ratio TopLeft
     nmaster    = 1
     delta      = 3/100
     ratio      = 1/2
 
+myXPConfig = defaultXPConfig { font = "xft:Inconsolata-8" }
+
+myTabConfig = defaultTheme { fontName = "xft:Inconsolata-8", decoHeight = 14 }
