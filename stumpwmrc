@@ -80,8 +80,8 @@
 (setf *window-border-style* :thin)
 
 ;; Window border colors.
-(set-focus-color "darkred")
-(set-unfocus-color "black")
+(set-focus-color "yellow")
+(set-unfocus-color "dark gray")
 
 ;; Input box colors.
 (set-fg-color *foreground-color*)
@@ -131,4 +131,15 @@
 (setf *screen-mode-line-format* 
       (list '(:eval (run-shell-command "date +\"%d-%m-%Y %H:%M\" | tr -d '[:cntrl:]'" t))
             " | %W | %g | %I | %l | %B | %c")) 
-   
+
+;; Load swank.
+;; C-t ; swank will kick this off   
+(load "/home/mburrows/elisp/slime/swank-loader.lisp")
+(swank-loader:init)
+(defcommand swank () ()
+  (setf stumpwm:*top-level-error-action* :break)
+  (swank:create-server :port 4005
+                       :style swank:*communication-style*
+                       :dont-close t)
+  (echo-string (current-screen) 
+	       "Starting swank. M-x slime-connect RET RET, then (in-package stumpwm)."))
