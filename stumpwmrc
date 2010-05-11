@@ -6,10 +6,10 @@
 
 ;; Load contrib modules
 (load "/home/mburrows/src/stumpwm/contrib/surfraw.lisp")
-(load "/home/mburrows/src/stumpwm/contrib/battery-portable.lisp")
-(load "/home/mburrows/src/stumpwm/contrib/wifi.lisp")
-(load "/home/mburrows/src/stumpwm/contrib/cpu.lisp")
-(load "/home/mburrows/src/stumpwm/contrib/net.lisp")
+;(load "/home/mburrows/src/stumpwm/contrib/battery-portable.lisp")
+;(load "/home/mburrows/src/stumpwm/contrib/wifi.lisp")
+;(load "/home/mburrows/src/stumpwm/contrib/cpu.lisp")
+;(load "/home/mburrows/src/stumpwm/contrib/net.lisp")
 
 (set-prefix-key (kbd "C-t"))
 
@@ -20,6 +20,9 @@
 
 (defcommand firefox () ()
   (run-or-raise "firefox" '(:class "Firefox")))
+
+(defcommand chrome () ()
+  (run-or-raise "google-chrome" '(:class "Google-chrome")))
 
 (defcommand xterm-1 () ()
   "run an xterm instance"
@@ -71,7 +74,6 @@
 
 (defparameter *foreground-color* "dark gray")
 (defparameter *background-color* "black")
-(defparameter *border-color* "dark gray")
 
 (set-msg-border-width 2)
 (setf *message-window-padding* 2)
@@ -86,7 +88,7 @@
 ;; Input box colors.
 (set-fg-color *foreground-color*)
 (set-bg-color *background-color*)
-(set-border-color *border-color*)
+(set-border-color "yellow")
 
 ;; Modeline colors.
 (setf *mode-line-foreground-color* *foreground-color*)
@@ -96,14 +98,14 @@
 (set-font "fixed")
 
 ;; Create a few workspaces
-(run-commands "gnewbg emacs"
-              "gnewbg web"
-              "gnewbg reading"
-              "gnewbg video")
+(run-commands "gnewbg dev"
+              "gnewbg cert"
+              "gnewbg prod")
 
 ;; Shortcuts
-(define-key *top-map* (kbd "s-c") "exec xterm")
+(define-key *top-map* (kbd "s-Return") "exec xterm -e zsh")
 (define-key *top-map* (kbd "s-f") "firefox")
+(define-key *top-map* (kbd "s-c") "chrome")
 (define-key *top-map* (kbd "s-r") "loadrc")
 (define-key *top-map* (kbd "s-e") "emacs")
 (define-key *top-map* (kbd "s-t") "xterm-1")
@@ -120,17 +122,13 @@
 ;; Window placement rules
 (clear-window-placement-rules)
 
-(define-frame-preference "emacs"
+(define-frame-preference "Default"
   ;; frame raise lock (lock AND raise == jumpto)
   (0 t   t :title "emacs"))
 
-(define-frame-preference "web"
-  ;; frame raise lock (lock AND raise == jumpto)
-  (0 t   t :class "Firefox"))
-
 (setf *screen-mode-line-format* 
       (list '(:eval (run-shell-command "date +\"%d-%m-%Y %H:%M\" | tr -d '[:cntrl:]'" t))
-            " | %W | %g | %I | %l | %B | %c")) 
+            " | %W | %g"))
 
 ;; Load swank.
 ;; C-t ; swank will kick this off   
@@ -143,3 +141,4 @@
                        :dont-close t)
   (echo-string (current-screen) 
 	       "Starting swank. M-x slime-connect RET RET, then (in-package stumpwm)."))
+

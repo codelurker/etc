@@ -19,14 +19,14 @@ import System.IO
 main = do
     xmproc <- spawnPipe "xmobar"
     xmonad $ defaultConfig
-	{ manageHook = manageDocks <+> manageHook defaultConfig
+	{ manageHook = myManageHook <+> manageDocks <+> manageHook defaultConfig
         , layoutHook = myLayouts
 	, logHook = dynamicLogWithPP $ xmobarPP
                         { ppOutput = hPutStrLn xmproc
                         , ppTitle = xmobarColor "darkcyan" "" . shorten 50
                         }
         , modMask = mod4Mask
-        , terminal = "gnome-terminal"
+        , terminal = "urxvt -e zsh"
         , borderWidth = 2
         , normalBorderColor = "black"
         , focusedBorderColor = "orange"
@@ -35,7 +35,6 @@ main = do
 myKeys =
         -- Program launching
         [ ((mod4Mask .|. shiftMask, xK_l), spawn "gnome-screensaver-command --lock")
-        --, ((mod4Mask, xK_s), sshPrompt myXPConfig)
         , ((mod4Mask, xK_s), spawn "/home/mburrows/scripts/sshmenu")
         , ((mod4Mask, xK_e), runOrRaise "emacs" (className =? "Emacs"))
         , ((mod4Mask, xK_f), runOrRaise "firefox" (className =? "Firefox"))
@@ -64,7 +63,7 @@ myKeys =
               , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
 myLayouts = avoidStruts $ smartBorders $
-            tabbed shrinkText myTabConfig ||| Full ||| hintedTile XMonad.Layout.HintedTile.Tall ||| hintedTile Wide ||| Accordion 
+            hintedTile Wide ||| hintedTile XMonad.Layout.HintedTile.Tall ||| Full ||| simpleTabbed ||| Accordion 
   where
     hintedTile = HintedTile nmaster delta ratio TopLeft
     nmaster    = 1
@@ -74,3 +73,6 @@ myLayouts = avoidStruts $ smartBorders $
 myXPConfig = defaultXPConfig { font = "xft:Inconsolata-8" }
 
 myTabConfig = defaultTheme { fontName = "xft:Inconsolata-8", decoHeight = 14 }
+
+myManageHook = composeAll [ className =? "Dia" --> doFloat ]
+

@@ -1,13 +1,13 @@
 XTerm*background:               black
 XTerm*foreground:               white
 XTerm*faceName:                 Inconsolata
-XTerm*faceSize:                 10
+XTerm*faceSize:                 11
 XTerm*saveLines:		2000
 XTerm*altIsNotMeta:             true
 XTerm*altSendsEscape:           true
 
-URxvt*font:                     xft:Inconsolata:size=8
-URxvt*boldFont:                 xft:Inconsolata:size=8
+URxvt*font:                     xft:Inconsolata:size=11
+URxvt*boldFont:                 xft:Inconsolata:size=11
 URxvt*skipBuiltinGlyphs:        on
 URxvt*scrollBar_right:          on
 URxvt*scrollTtyOutput:          false

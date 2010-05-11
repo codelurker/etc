@@ -22,7 +22,7 @@ done
 
 # Install script files
 mkdir -p ~/scripts
-for s in xmonad.sh sshmenu; do 
+for s in xmonad.sh sshmenu pychecker.sh; do 
     safe_link ~/etc/$s ~/scripts/$s
 done
 
