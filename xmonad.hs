@@ -1,12 +1,20 @@
 import XMonad
 import XMonad.Actions.CycleWS
 import XMonad.Actions.WindowGo
+import XMonad.Actions.GridSelect
+import XMonad.Actions.PhysicalScreens
+import XMonad.Config.Gnome
+import XMonad.Config.Desktop(desktopLayoutModifiers)
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Layout.Tabbed
 import XMonad.Layout.Accordion
 import XMonad.Layout.HintedTile
 import XMonad.Layout.NoBorders
+import XMonad.Layout.IM
+import XMonad.Layout.Reflect
+import XMonad.Layout.Grid
+import XMonad.Layout.ToggleLayouts
 import XMonad.Prompt
 import XMonad.Prompt.Window
 import XMonad.Prompt.RunOrRaise
@@ -15,19 +23,15 @@ import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig(additionalKeys)
 import qualified XMonad.StackSet as W
 import System.IO
+import Data.Ratio ((%))
 
 main = do
-    xmproc <- spawnPipe "xmobar"
-    xmonad $ defaultConfig
-	{ manageHook = myManageHook <+> manageDocks <+> manageHook defaultConfig
-        , layoutHook = myLayouts
-	, logHook = dynamicLogWithPP $ xmobarPP
-                        { ppOutput = hPutStrLn xmproc
-                        , ppTitle = xmobarColor "darkcyan" "" . shorten 50
-                        }
+    xmonad $ gnomeConfig
+	{ manageHook = myManageHook <+> manageDocks <+> manageHook gnomeConfig
+        , layoutHook = desktopLayoutModifiers (myLayouts)
         , modMask = mod4Mask
-        , terminal = "urxvt -e zsh"
-        , borderWidth = 2
+        , terminal = "xterm -e zsh"
+        , borderWidth = 1
         , normalBorderColor = "black"
         , focusedBorderColor = "orange"
         } `additionalKeys` myKeys
@@ -37,10 +41,9 @@ myKeys =
         [ ((mod4Mask .|. shiftMask, xK_l), spawn "gnome-screensaver-command --lock")
         , ((mod4Mask, xK_s), spawn "/home/mburrows/scripts/sshmenu")
         , ((mod4Mask, xK_e), runOrRaise "emacs" (className =? "Emacs"))
-        , ((mod4Mask, xK_f), runOrRaise "firefox" (className =? "Firefox"))
+        , ((mod4Mask, xK_w), runOrRaise "google-chrome" (className =? "Google-chrome"))
+        , ((mod4Mask, xK_f), runOrRaise "google-chrome" (className =? "Google-chrome"))
         , ((mod4Mask, xK_r), runOrRaisePrompt myXPConfig)
-        , ((mod4Mask, xK_g), windowPromptGoto myXPConfig)
-        , ((mod4Mask, xK_b), windowPromptBring myXPConfig)
         ]
         -- Cycle workspaces setup
         ++
@@ -55,24 +58,42 @@ myKeys =
         , ((mod4Mask, xK_z), toggleWS)
         , ((mod4Mask, xK_o), moveTo Next EmptyWS)
         , ((mod4Mask .|. shiftMask, xK_o), shiftTo Next EmptyWS)
+        , ((mod4Mask, xK_g), goToSelected defaultGSConfig)
+        , ((mod4Mask, xK_b), windowPromptBring myXPConfig)
+        , ((mod4Mask .|. controlMask, xK_space), sendMessage ToggleLayout)
         ]
         -- Map screen switching onto F1..F4 
         ++
-        [((m .|. mod4Mask, key), screenWorkspace sc >>= flip whenJust (windows . f))
-              | (key, sc) <- zip [xK_F1, xK_F2, xK_F3, xK_F4] [0..]
-              , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+        [((mod4Mask .|. mask, key), f sc)
+             | (key, sc) <- zip [xK_F1, xK_F2, xK_F3, xK_F4] [0..]
+             , (f, mask) <- [(viewScreen, 0), (sendToScreen, shiftMask)]]
 
-myLayouts = avoidStruts $ smartBorders $
-            hintedTile Wide ||| hintedTile XMonad.Layout.HintedTile.Tall ||| Full ||| simpleTabbed ||| Accordion 
+myLayouts = toggle $ avoidStruts $ smartBorders $
+            hintedTile Wide 
+            ||| hintedTile XMonad.Layout.HintedTile.Tall 
+            ||| Full 
+            ||| simpleTabbed 
+            ||| Accordion 
+            ||| Grid 
+            ||| myVolumeLayout
   where
     hintedTile = HintedTile nmaster delta ratio TopLeft
     nmaster    = 1
     delta      = 3/100
     ratio      = 1/2
+    toggle     = toggleLayouts (noBorders Full)
 
-myXPConfig = defaultXPConfig { font = "xft:Inconsolata-8" }
+myXPConfig = defaultXPConfig { font = "xft:Inconsolata-10" }
 
-myTabConfig = defaultTheme { fontName = "xft:Inconsolata-8", decoHeight = 14 }
+myTabConfig = defaultTheme { fontName = "xft:Inconsolata-10", decoHeight = 14 }
 
 myManageHook = composeAll [ className =? "Dia" --> doFloat ]
 
+myVolumeLayout' l = reflectHoriz $ withIM size volumeSummary $ reflectHoriz $ l
+    where 
+      -- Ratio of screen volume summary will occupy
+      size = 1%5
+      -- Match volume summary 
+      volumeSummary = Title "Volume - Google Chrome"
+
+myVolumeLayout = myVolumeLayout' Grid
