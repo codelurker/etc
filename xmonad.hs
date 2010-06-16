@@ -12,13 +12,11 @@ import XMonad.Layout.Accordion
 import XMonad.Layout.HintedTile
 import XMonad.Layout.NoBorders
 import XMonad.Layout.IM
-import XMonad.Layout.Reflect
 import XMonad.Layout.Grid
 import XMonad.Layout.ToggleLayouts
 import XMonad.Prompt
 import XMonad.Prompt.Window
 import XMonad.Prompt.RunOrRaise
-import XMonad.Prompt.Ssh
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig
 import qualified XMonad.StackSet as W
@@ -42,8 +40,8 @@ myKeys =
         , ((mod4Mask, xK_s), spawn "/home/mburrows/scripts/sshmenu")
         , ((mod4Mask, xK_e), runOrRaise "emacs" (className =? "Emacs"))
         , ((mod4Mask, xK_w), runOrRaise "google-chrome" (className =? "Google-chrome"))
-        , ((mod4Mask, xK_f), runOrRaise "google-chrome" (className =? "Google-chrome"))
         , ((mod4Mask, xK_v), runOrRaise "vlc" (className =? "Vlc"))
+        , ((mod4Mask, xK_y), runOrRaise "vmplayer" (className =? "Vmplayer"))
         , ((mod4Mask, xK_m), runOrRaise "thunderbird" (className =? "Thunderbird"))
         , ((mod4Mask, xK_n), runOrRaise "liferea" (className =? "Liferea"))
         , ((mod4Mask, xK_r), runOrRaisePrompt myXPConfig)
@@ -78,13 +76,13 @@ myLayouts = toggle $ avoidStruts $ smartBorders $
             ||| simpleTabbed 
             ||| Accordion 
             ||| Grid 
-            ||| myVolumeLayout
+            ||| myBatsVolumeLayout
   where
     hintedTile = HintedTile nmaster delta ratio TopLeft
     nmaster    = 1
     delta      = 3/100
     ratio      = 1/2
-    toggle     = toggleLayouts (noBorders Full)
+    toggle     = toggleLayouts (noBorders Full) -- allows toggling to fullscreen view
 
 myXPConfig = defaultXPConfig { font = "xft:Inconsolata-10" }
 
@@ -92,11 +90,10 @@ myTabConfig = defaultTheme { fontName = "xft:Inconsolata-10", decoHeight = 14 }
 
 myManageHook = composeAll [ className =? "Dia" --> doFloat ]
 
-myVolumeLayout' l = reflectHoriz $ withIM size volumeSummary $ reflectHoriz $ l
+-- Custom layout for the BATS Volume Summary dashboard widget + large web browser
+myBatsVolumeLayout = withIM size volumeSummary Grid
     where 
       -- Ratio of screen volume summary will occupy
       size = 1%5
       -- Match volume summary 
       volumeSummary = Title "Volume - Google Chrome"
-
-myVolumeLayout = myVolumeLayout' Grid
