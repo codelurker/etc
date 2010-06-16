@@ -20,7 +20,7 @@ import XMonad.Prompt.Window
 import XMonad.Prompt.RunOrRaise
 import XMonad.Prompt.Ssh
 import XMonad.Util.Run(spawnPipe)
-import XMonad.Util.EZConfig(additionalKeys)
+import XMonad.Util.EZConfig
 import qualified XMonad.StackSet as W
 import System.IO
 import Data.Ratio ((%))
@@ -43,6 +43,9 @@ myKeys =
         , ((mod4Mask, xK_e), runOrRaise "emacs" (className =? "Emacs"))
         , ((mod4Mask, xK_w), runOrRaise "google-chrome" (className =? "Google-chrome"))
         , ((mod4Mask, xK_f), runOrRaise "google-chrome" (className =? "Google-chrome"))
+        , ((mod4Mask, xK_v), runOrRaise "vlc" (className =? "Vlc"))
+        , ((mod4Mask, xK_m), runOrRaise "thunderbird" (className =? "Thunderbird"))
+        , ((mod4Mask, xK_n), runOrRaise "liferea" (className =? "Liferea"))
         , ((mod4Mask, xK_r), runOrRaisePrompt myXPConfig)
         ]
         -- Cycle workspaces setup
