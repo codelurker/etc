@@ -23,7 +23,6 @@ import XMonad.Layout.ShowWName
 
 import XMonad.Prompt
 import XMonad.Prompt.Window
-import XMonad.Prompt.RunOrRaise
 
 import XMonad.Util.EZConfig
 
@@ -51,7 +50,6 @@ myKeys =
         , ((mod4Mask, xK_y), runOrRaise "vmplayer" (className =? "Vmplayer"))
         , ((mod4Mask, xK_m), runOrRaise "thunderbird" (className =? "Thunderbird"))
         , ((mod4Mask, xK_n), runOrRaise "liferea" (className =? "Liferea"))
-        , ((mod4Mask, xK_r), runOrRaisePrompt myXPConfig)
         ]
         -- Cycle workspaces setup
         ++
