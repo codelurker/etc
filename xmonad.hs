@@ -19,6 +19,7 @@ import XMonad.Layout.NoBorders
 import XMonad.Layout.IM
 import XMonad.Layout.Grid
 import XMonad.Layout.ToggleLayouts
+import XMonad.Layout.ShowWName
 
 import XMonad.Prompt
 import XMonad.Prompt.Window
@@ -32,7 +33,7 @@ import Data.Ratio ((%))
 main = do
     xmonad $ gnomeConfig
 	{ manageHook = myManageHook <+> manageDocks <+> manageHook gnomeConfig
-        , layoutHook = desktopLayoutModifiers (myLayouts)
+        , layoutHook = showWName $ desktopLayoutModifiers $ myLayouts
         , modMask = mod4Mask
         , terminal = "xterm -e zsh"
         , borderWidth = 1
