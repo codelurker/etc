@@ -1,4 +1,4 @@
-import XMonad
+import XMonad hiding (Tall)
 import qualified XMonad.StackSet as W
 
 import XMonad.Actions.CycleWS
@@ -78,7 +78,7 @@ myKeys =
 
 myLayouts = toggle $ avoidStruts $ smartBorders $
             hintedTile Wide 
-            ||| hintedTile XMonad.Layout.HintedTile.Tall 
+            ||| hintedTile Tall 
             ||| Full 
             ||| simpleTabbed 
             ||| Accordion 
