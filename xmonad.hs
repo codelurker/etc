@@ -1,12 +1,17 @@
 import XMonad
+import qualified XMonad.StackSet as W
+
 import XMonad.Actions.CycleWS
 import XMonad.Actions.WindowGo
 import XMonad.Actions.GridSelect
 import XMonad.Actions.PhysicalScreens
+
 import XMonad.Config.Gnome
 import XMonad.Config.Desktop(desktopLayoutModifiers)
+
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
+
 import XMonad.Layout.Tabbed
 import XMonad.Layout.Accordion
 import XMonad.Layout.HintedTile
@@ -14,12 +19,13 @@ import XMonad.Layout.NoBorders
 import XMonad.Layout.IM
 import XMonad.Layout.Grid
 import XMonad.Layout.ToggleLayouts
+
 import XMonad.Prompt
 import XMonad.Prompt.Window
 import XMonad.Prompt.RunOrRaise
-import XMonad.Util.Run(spawnPipe)
+
 import XMonad.Util.EZConfig
-import qualified XMonad.StackSet as W
+
 import System.IO
 import Data.Ratio ((%))
 
